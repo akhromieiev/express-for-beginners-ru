@@ -2,6 +2,8 @@ const express = require('express');
 
 const app = express(); //its working
 const products = ['Apple', 'Pen', 'Computer'];
+app.set('view engine', 'pug');
+app.set('views', './views');
 
 app.use('/static', express.static(__dirname + '/public'));
 
@@ -31,6 +33,14 @@ app.get('/downloadBooks', (req, res, next) => {
 app.get('/blog', (req, res, next) => {
     res.redirect(301, '/');
 })
+
+app.get('/main', (req, res, next)=>{
+    res.render('main', {
+        title: 'Products',
+        message: 'Products List',
+        products: products
+    });
+});
 
 app.use((err, req, res, next) => {
     console.log(err.stack);
